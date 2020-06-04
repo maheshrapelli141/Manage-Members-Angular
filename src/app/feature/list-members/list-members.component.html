@@ -41,12 +41,12 @@
 		  </thead>
 		  <tbody *ngIf="!members">
 		  	<tr>
-		  		<td colspan="6">Loading...</td>
+		  		<td colspan="7">Loading...</td>
 		  	</tr>
 		  </tbody>
 		  <tbody *ngIf="members && !members.length; else elseMembers">
 		  	<tr>
-		  		<td colspan="6">Members not listed yet</td>
+		  		<td colspan="7">Members not listed yet</td>
 		  	</tr>
 		  </tbody>
 		  <ng-template #elseMembers>
