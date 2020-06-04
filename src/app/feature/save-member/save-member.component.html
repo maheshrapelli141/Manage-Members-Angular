@@ -1,0 +1,72 @@
+<div class="container custom-section">
+  <a routerLink="/" class="btn btn-link btn-sm">Back To List</a>
+  <div class="row">
+    <div class="col-sm-12 text-center">
+      <h2>{{title}}</h2>
+    </div>
+    <div class="col-sm-12">
+        <form [formGroup]="memberForm" (ngSubmit)="saveMember()" [ngClass]="isSubmitted ? 'was-validated': ''">
+          <input type="hidden" formControlName="id">
+          <div class="custom-control custom-checkbox mb-3">
+            <label>First Name <span class="required-marker">*</span></label>
+            <input type="text" class="form-control" formControlName='firstname' placeholder="Enter firstname" required>
+            <div class="custom-invalid-feedback" *ngIf="!memberForm.get('firstname').valid && memberForm.get('firstname').touched" (input)="changeInput($event)">
+              <span *ngIf="memberForm.get('firstname').errors?.required">Enter first name</span>
+              <span *ngIf="memberForm.get('firstname').errors?.minlength">First name should be at least 3 characters</span>
+              <span *ngIf="memberForm.get('firstname').errors?.maxlength">First name cannot be at greater than 20 characters</span>
+              <span *ngIf="memberForm.get('firstname').errors?.pattern">First letter should be capital and only alphabetical characters allowed</span>
+              <span *ngIf="memberForm.get('firstname').errors?.samename">First name and Last name cannot be same</span>
+            </div>
+          </div>
+          <div class="custom-control custom-checkbox mb-3">
+            <label>Last Name <span class="required-marker">*</span></label>
+            <input type="text" class="form-control" formControlName='lastname' placeholder="Enter lastname" required (input)="changeInput($event)">
+            <div class="custom-invalid-feedback" *ngIf="!memberForm.get('lastname').valid && memberForm.get('lastname').touched">
+              <span *ngIf="memberForm.get('lastname').errors?.required">Enter Last name</span>
+              <span *ngIf="memberForm.get('lastname').errors?.minlength">Last name should be at least 3 characters</span>
+              <span *ngIf="memberForm.get('lastname').errors?.maxlength">Last name cannot be at greater than 20 characters</span>
+              <span *ngIf="memberForm.get('lastname').errors?.pattern">Last letter should be capital and only alphabetical characters allowed</span>
+              <span *ngIf="memberForm.get('lastname').errors?.samename">First name and Last name cannot be same</span>
+            </div>
+          </div>
+          <div class="custom-control custom-checkbox mb-3">
+            <label>Mobile Number <span class="required-marker">*</span></label>
+            <input type="text" class="form-control" formControlName='mobile' placeholder="Enter mobile" required (input)="validateMobile($event)">
+            <div class="custom-invalid-feedback" *ngIf="!memberForm.get('mobile').valid && memberForm.get('mobile').touched">
+              <span *ngIf="memberForm.get('mobile').errors?.required">Enter mobile number</span>
+              <span *ngIf="memberForm.get('mobile').errors?.maxlength">Only 10 digits allowed</span>
+              <span *ngIf="memberForm.get('mobile').errors?.pattern">Enter valid mobile number</span>
+              <span *ngIf="memberForm.get('mobile').errors?.custom">Mobile number should start with 7,8 or 9</span>
+            </div>
+          </div>
+          <div class="custom-control custom-checkbox mb-3">
+            <label>Email Name <span class="required-marker">*</span></label>
+            <input type="email" class="form-control" formControlName='email' placeholder="Enter email" required>
+            <div class="custom-invalid-feedback" *ngIf="!memberForm.get('email').valid && memberForm.get('email').touched">
+              <span *ngIf="memberForm.get('email').errors?.required">Please enter email address</span>
+              <span *ngIf="memberForm.get('email').errors?.pattern">Please provide valid email address</span>
+            </div>
+          </div>
+          <div class="custom-control custom-checkbox mb-3">
+            <label>Date of Birth <span class="required-marker">*</span></label>
+            <input type="date" class="form-control" formControlName='dob'   [(ngModel)]="dob" placeholder="Select Date of Birth" required>
+            <div class="custom-invalid-feedback" *ngIf="!memberForm.get('dob').valid && memberForm.get('dob').touched">Select Date of Birth</div>
+          </div>
+          <div class="custom-control custom-checkbox mb-3">
+            <label>Address <span class="required-marker">*</span></label>
+            <textarea class="form-control" formControlName='address' placeholder="Enter address" required></textarea>
+            <div class="custom-invalid-feedback" *ngIf="!memberForm.get('address').valid && memberForm.get('address').touched">
+            <span *ngIf="memberForm.get('address').errors?.required">Enter Address</span>
+            <span *ngIf="memberForm.get('address').errors?.maxlength">Only 50 characters allowed</span>
+            </div>
+          </div>
+          <div class="alert" [ngClass]="formResponseStatus ? 'alert-success' : 'alert-danger'" *ngIf="formResponseMessage && formResponseMessage.length">
+            {{formResponseMessage}}
+          </div>
+          <button type="submit" class="btn btn-success btn-right">Save</button>
+        </form>
+    </div>
+  </div>
+  
+
+</div>

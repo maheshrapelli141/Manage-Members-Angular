@@ -1,0 +1,90 @@
+<div class="container custom-section">
+	<div class="col-sm-12 text-center">
+		<h2>Manage Members</h2>
+	</div>
+	<div class="row">
+		<div class="col-sm-4">
+			<input type="text" name="" (input)="searchMember($event)" class="form-control" placeholder="Search Members">
+		</div>
+		<div class="col-sm-8">
+			<a routerLink="add" class="btn btn-primary btn-right">Add</a>
+		</div>
+		<div class="col-sm-12">
+			<br><br>
+			<div class="table-responsive">
+		<table class="table table-bordered">
+		  <thead class="thead-dark">
+		    <tr>
+		      <th scope="col">#</th>
+		      <th scope="col">
+			      Full Name
+			      <button type="button" class="btn btn-link btn-sort" (click)="sortColumn('firstname')">^</button>
+			  </th>
+		      <th scope="col">
+		      	Mobile
+		      	<button type="button" class="btn btn-link btn-sort" (click)="sortColumn('mobile')">^</button>
+		      </th>
+		      <th scope="col">
+		      	Email
+		      	<button type="button" class="btn btn-link btn-sort" (click)="sortColumn('email')">^</button>
+		      </th>
+		      <th scope="col">
+		      	Date of Birth
+		      	<button type="button" class="btn btn-link btn-sort" (click)="sortColumn('dob')">^</button>
+		      </th>
+		      <th scope="col">
+		      	Address
+		      	<button type="button" class="btn btn-link btn-sort" (click)="sortColumn('dob')">^</button>
+		      </th>
+		      <th scope="col">Actions</th>
+		    </tr>
+		  </thead>
+		  <tbody *ngIf="!members">
+		  	<tr>
+		  		<td colspan="6">Loading...</td>
+		  	</tr>
+		  </tbody>
+		  <tbody *ngIf="members && !members.length; else elseMembers">
+		  	<tr>
+		  		<td colspan="6">Members not listed yet</td>
+		  	</tr>
+		  </tbody>
+		  <ng-template #elseMembers>
+			  <tbody>
+			    <tr *ngFor="let member of members; index as i">
+			      <th scope="row">{{i+1}}</th>
+			      <td>{{member.firstname}} {{member.lastname}}</td>
+			      <td>{{member.mobile}}</td>
+			      <td>{{member.email}}</td>
+			      <td>{{member.dob}}</td>
+			      <td>{{member.address}}</td>
+			      <td>
+			      	<button type="button" class="btn btn-danger" (click)="confirmDelete(deleteModal,member.id)">Delete</button>
+			      	<a [routerLink]="['add',member.id]" class="btn btn-warning">Edit</a>
+			      </td>
+			    </tr>
+			  </tbody>
+			</ng-template>
+		</table>
+	</div>		
+		</div>
+	</div>
+</div>
+
+
+<!-- Modal -->
+<ng-template #deleteModal let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Delete Member</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    Are you sure to delete member ?
+    <div class="alert" [ngClass]="responseStatus ? 'alert-success': 'alert-danger'" *ngIf="responseMessage && responseMessage.length">
+    	{{responseMessage}}
+    </div>
+    <button type="button" class="btn btn-danger btn-right" (click)="deleteMember()">Delete</button>
+  </div>
+</ng-template>
